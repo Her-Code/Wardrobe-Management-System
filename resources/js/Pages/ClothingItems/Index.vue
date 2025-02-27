@@ -1,56 +1,3 @@
-<template>
-  <div class="container">
-    <h1 class="text-2xl font-bold text-center my-6">Clothing Items</h1>
-
-    <!-- Search and Filter Section -->
-    <div class="flex justify-between items-center mb-6">
-      <!-- Search Bar -->
-      <input
-        v-model="searchQuery"
-        @input="onSearch"
-        type="text"
-        placeholder="Search by item name"
-        class="p-2 border border-gray-300 rounded-lg"
-      />
-
-      <!-- Category Filter -->
-      <select v-model="selectedCategory" @change="onCategoryChange" class="p-2 border border-gray-300 rounded-lg">
-        <option value="">All Categories</option>
-        <option v-for="category in categories" :key="category.id" :value="category.id">
-          {{ category.name }}
-        </option>
-      </select>
-    </div>
-
-    <!-- Clothing Items List -->
-    <div class="clothing-items-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="item in clothingItems.data" :key="item.id" class="clothing-item p-4 border rounded-lg shadow-sm hover:shadow-lg transition duration-300">
-        <img :src="item.image" alt="Clothing Item Image" class="clothing-item-image w-full h-48 object-cover mb-4 rounded-lg">
-        <h3 class="text-xl font-semibold mb-2">{{ item.name }}</h3>
-        <p class="text-sm text-gray-600">Category: {{ item.category.name }}</p>
-        <p class="text-sm text-gray-600">Size: {{ item.size }}</p>
-        <p class="text-sm text-gray-600">Color: {{ item.color }}</p>
-
-        <!-- Buttons Section -->
-        <div class="buttons mt-4 flex space-x-4">
-          <button @click="viewItem(item.id)" class="btn-view text-white bg-blue-500 hover:bg-orange-500 py-2 px-4 rounded-lg transition-colors duration-300">
-            View Details
-          </button>
-          <button @click="editItem(item.id)" class="btn-edit text-white bg-blue-500 hover:bg-orange-500 py-2 px-4 rounded-lg transition-colors duration-300">
-            Edit
-          </button>
-          <button @click="deleteItem(item.id)" class="btn-delete text-white bg-blue-500 hover:bg-orange-500 py-2 px-4 rounded-lg transition-colors duration-300">
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pagination Component -->
-    <Pagination :meta="clothingItems.meta" @page-changed="goToPage" />
-  </div>
-</template>
-
 <script>
 import Pagination from '@/Components/Pagination.vue'; // Import the Pagination component
 
@@ -117,6 +64,59 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div class="container">
+    <h1 class="text-2xl font-bold text-center my-6">Clothing Items</h1>
+
+    <!-- Search and Filter Section -->
+    <div class="flex justify-between items-center mb-6">
+      <!-- Search Bar -->
+      <input
+        v-model="searchQuery"
+        @input="onSearch"
+        type="text"
+        placeholder="Search by item name"
+        class="p-2 border border-gray-300 rounded-lg"
+      />
+
+      <!-- Category Filter -->
+      <select v-model="selectedCategory" @change="onCategoryChange" class="p-2 border border-gray-300 rounded-lg">
+        <option value="">All Categories</option>
+        <option v-for="category in categories" :key="category.id" :value="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Clothing Items List -->
+    <div class="clothing-items-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-for="item in clothingItems.data" :key="item.id" class="clothing-item p-4 border rounded-lg shadow-sm hover:shadow-lg transition duration-300">
+        <img :src="item.image" alt="Clothing Item Image" class="clothing-item-image w-full h-48 object-cover mb-4 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">{{ item.name }}</h3>
+        <p class="text-sm text-gray-600">Category: {{ item.category.name }}</p>
+        <p class="text-sm text-gray-600">Size: {{ item.size }}</p>
+        <p class="text-sm text-gray-600">Color: {{ item.color }}</p>
+
+        <!-- Buttons Section -->
+        <div class="buttons mt-4 flex space-x-4">
+          <button @click="viewItem(item.id)" class="btn-view text-white bg-blue-500 hover:bg-orange-500 py-2 px-4 rounded-lg transition-colors duration-300">
+            View Details
+          </button>
+          <button @click="editItem(item.id)" class="btn-edit text-white bg-blue-500 hover:bg-orange-500 py-2 px-4 rounded-lg transition-colors duration-300">
+            Edit
+          </button>
+          <button @click="deleteItem(item.id)" class="btn-delete text-white bg-blue-500 hover:bg-orange-500 py-2 px-4 rounded-lg transition-colors duration-300">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination Component -->
+    <Pagination :meta="clothingItems.meta" @page-changed="goToPage" />
+  </div>
+</template>
 
 <style scoped>
 /* Styling for the container */
