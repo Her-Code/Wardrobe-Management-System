@@ -11,6 +11,8 @@ class ClothingItem extends Model
     protected $fillable = [
         'user_id', 'category_id', 'name', 'size', 'color', 'image',
     ];
+    
+    protected $with = ['user', 'category'];
 
     public function user()
     {
