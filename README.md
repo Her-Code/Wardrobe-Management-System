@@ -1,67 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Wardrobe-Management-System
+This *Wardrobe Management System* allows users to manage their clothing items, including the ability to add, edit, delete, categorize, and filter items. The system uses **Laravel 11** as the backend and **Vue3** as the frontend framework. The application also features user authentication, with login and registration functionalities using **Laravel Breeze**. The UI is built using **Tailwind CSS**, providing a responsive, user-friendly interface. **Inertia.js** is used to seamlessly connect the frontend and backend.The backend uses **SQLite** as the database.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Features
+- **User Authentication**
 
-## About Laravel
+- Login and registration functionality powered by Laravel Breeze.
+- Protected routes for authenticated users.
+- **Clothing Item Management**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Add, edit, and delete clothing items.
+- Clothing items can be categorized (e.g., tops, bottoms, shoes).
+- Ability to upload images for clothing items.
+- **Search and Filter**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Search clothing items by name, category, or other properties.
+- **Filter clothing items by category.**
+- **Responsive UI**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Mobile-first design.
+- 2-column grid system for displaying clothing items.
 
-## Learning Laravel
+## Tech Stack
+### Frontend:
+- Vue3
+- Tailwind CSS
+- Inertia.js
+### Backend:
+- Laravel 11
+- Laravel Breeze (Authentication)
+- Pest (Testing)
+### Database: SQLite.
+#### Prerequisites
+Before you begin, ensure you have the following software installed:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8.1+ (for Laravel 11)
+- Composer (for PHP dependencies)
+- Node.js 14+ (for Vue3)
+- NPM (for JavaScript dependencies)
+- SQLite
+**Project Setup**
+1. Clone the Repository
+Clone the repository to your local machine:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+ ```git clone https://github.com/your-username/wardrobe-management.git cd wardrobe-management ``` 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. Backend Setup (Laravel)
+Install Laravel Dependencies
+Run the following command to install the backend dependencies:
 
-## Laravel Sponsors
+```cd backend composer install```
+#### Set up Environment Variables
+Copy the ```.env.example``` file to .env and set up your environment configuration:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```cp .env.example .env```
+Modify the .env file to include your database credentials:
 
-### Premium Partners
+```DB_CONNECTION=sqlite DB_DATABASE=/path_to_your_project/database/database.sqlite```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### Generate Application Key
+- Run the following command to generate a new application key:
 
-## Contributing
+```php artisan key:generate```
+- Run Database Migrations Run the migrations to create the necessary database tables:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```php artisan migrate```
 
-## Code of Conduct
+### Install Laravel Breeze for Authentication
+Laravel Breeze provides simple authentication features. To install it, run the following:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```composer require laravel/breeze --dev php artisan breeze:install vue npm install && npm run dev php artisan migrate ```
 
-## Security Vulnerabilities
+#### Install Pest for Testing
+To install Pest for testing, run:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```composer require pestphp/pest --dev```
+You can write your tests inside the tests folder using Pest's syntax.
+
+##### Start the Laravel Development Server
+Start the backend server:
+
+```php artisan serve```
+The Laravel API should now be available at http://127.0.0.1:8000.
+
+3. Frontend Setup (Vue3)
+#### Install Node.js Dependencies
+Navigate to the frontend folder and install the necessary frontend dependencies:
+
+```cd frontend npm install```
+#### Set up Environment Variables
+Create a .env file in the frontend directory:
+
+```cp .env.example .env```
+Modify the .env file to include the backend URL:
+
+```VUE_APP_BACKEND_URL=http://127.0.0.1:8000```
+##### Build and Run the Vue Development Server
+To run the Vue development server:
+
+```npm run dev```
+The Vue frontend should now be running at http://localhost:3000.
+
+### File Structure
+#### Backend (Laravel)
+```backend/├── app/│   ├── Http/│   │   ├── Controllers││──AuthController.php│   │   │  ├──ClothingItemController.php│   │   ├── Middleware/│   │   │   ├── Authenticate.php│   ├── Models/│   │   ├── ClothingItem.php│   │   ├── Category.php│   │   ├── User.php├── database/│  ├── migrations/│   │   ├── 2021_XX_XX_XXXXXX_create_clothing_items_table.php│   │   ├── 2021_XX_XX_XXXXXX_create_categories_table.php│   ├── seeders/│   │   ├── CategorySeeder.php│   │   ├── ClothingItemSeeder.php├── routes/│   ├── api.php│   ├── web.php├── .env├── composer.json```
+#### Frontend (Vue3)
+```frontend/├── src/│   ├── components/│   │   ├── ClothingItemCard.vue│   │   ├── ClothingItemList.vue│   ├── views/│   │   ├── Home.vue│   │   ├── Login.vue│   │   ├── Register.vue│   ├── store/│   │   ├── index.js├── .env├── package.json└── tailwind.config.js```
+### API Endpoints
+- POST /api/register - Register a new user.
+- POST /api/login - Login a user.
+- GET /api/clothing-items - Get all clothing items (with optional filtering).
+- POST /api/clothing-items - Add a new clothing item.
+- PUT /api/clothing-items/{id} - Edit an existing clothing item.
+- DELETE /api/clothing-items/{id} - Delete a clothing item.
+- GET /api/categories - Get all categories.
+### Frontend Components
+**Home.vue**
+This is the main view where users can see the list of clothing items, with options to filter, search, and view details.
+
+### Login.vue & Register.vue
+These are the authentication pages for user login and registration.
+
+### ClothingItemCard.vue
+This component displays individual clothing items, including their name, category, and options for editing, viewing, and deleting.
+
+### Styling
+The application uses Tailwind **CSS** to create a responsive, mobile-first design. The grid system displays clothing items in a 2-column format on larger screens.
+
+### Running Tests
+To run tests using Pest, use the following command:
+
+``` php artisan test ```
+
+### Contributions
+Feel free to fork this repository and submit pull requests. If you have any issues or suggestions, open an issue, and I will address it as soon as possible.
 
 ## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# Wardrobe-Management-System
+## Acknowledgments
+- Laravel (https://laravel.com/)
+- Vue.js (https://vuejs.org/)
+- Tailwind CSS (https://tailwindcss.com/)
+- Inertia.js (https://inertiajs.com/)
+- Pest (https://pestphp.com/)
+
