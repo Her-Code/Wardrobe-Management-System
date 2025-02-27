@@ -2,20 +2,20 @@
 This *Wardrobe Management System* allows users to manage their clothing items, including the ability to add, edit, delete, categorize, and filter items. The system uses **Laravel 11** as the backend and **Vue3** as the frontend framework. The application also features user authentication, with login and registration functionalities using **Laravel Breeze**. The UI is built using **Tailwind CSS**, providing a responsive, user-friendly interface. **Inertia.js** is used to seamlessly connect the frontend and backend.The backend uses **SQLite** as the database.
 
 ## Features
-- **User Authentication**
+### User Authentication**
 
 - Login and registration functionality powered by Laravel Breeze.
 - Protected routes for authenticated users.
-- **Clothing Item Management**
+### Clothing Item Management**
 
 - Add, edit, and delete clothing items.
 - Clothing items can be categorized (e.g., tops, bottoms, shoes).
 - Ability to upload images for clothing items.
-- **Search and Filter**
+### Search and Filter**
 
 - Search clothing items by name, category, or other properties.
-- **Filter clothing items by category.**
-- **Responsive UI**
+### Filter clothing items by category.
+### Responsive UI
 
 - Mobile-first design.
 - 2-column grid system for displaying clothing items.
@@ -39,72 +39,117 @@ Before you begin, ensure you have the following software installed:
 - NPM (for JavaScript dependencies)
 - SQLite
 **Project Setup**
-1. Clone the Repository
-Clone the repository to your local machine:
+1. Clone the Repository.
 
- ```git clone https://github.com/your-username/wardrobe-management.git cd wardrobe-management ``` 
+- Clone the repository to your local machine:
+
+     ```git clone https://github.com/your-username/wardrobe-management.git cd wardrobe-management ``` 
 
 2. Backend Setup (Laravel)
-Install Laravel Dependencies
+- Install Laravel Dependencies.
+
 Run the following command to install the backend dependencies:
 
-```cd backend composer install```
+  ```cd backend composer install```
+
 #### Set up Environment Variables
+
 Copy the ```.env.example``` file to .env and set up your environment configuration:
 
-```cp .env.example .env```
-Modify the .env file to include your database credentials:
+   ```cp .env.example .env```
+
+3. Modify the .env file to include your database credentials:
 
 ```DB_CONNECTION=sqlite DB_DATABASE=/path_to_your_project/database/database.sqlite```
 
 #### Generate Application Key
 - Run the following command to generate a new application key:
 
-```php artisan key:generate```
+    ```php artisan key:generate```
 - Run Database Migrations Run the migrations to create the necessary database tables:
 
-```php artisan migrate```
+     ```php artisan migrate```
 
 ### Install Laravel Breeze for Authentication
 Laravel Breeze provides simple authentication features. To install it, run the following:
 
-```composer require laravel/breeze --dev php artisan breeze:install vue npm install && npm run dev php artisan migrate ```
+  ```composer require laravel/breeze --dev```
+  ```php artisan breeze:install vue```
+  ``` npm install && npm run dev php artisan migrate ```
 
 #### Install Pest for Testing
 To install Pest for testing, run:
 
-```composer require pestphp/pest --dev```
+  ```composer require pestphp/pest --dev```
 You can write your tests inside the tests folder using Pest's syntax.
 
 ##### Start the Laravel Development Server
 Start the backend server:
 
-```php artisan serve```
+   ```php artisan serve```
+
 The Laravel API should now be available at http://127.0.0.1:8000.
 
 3. Frontend Setup (Vue3)
 #### Install Node.js Dependencies
 Navigate to the frontend folder and install the necessary frontend dependencies:
 
-```cd frontend npm install```
+   ```cd frontend npm install```
 #### Set up Environment Variables
 Create a .env file in the frontend directory:
 
-```cp .env.example .env```
+   ```cp .env.example .env```
 Modify the .env file to include the backend URL:
 
-```VUE_APP_BACKEND_URL=http://127.0.0.1:8000```
+   ```VUE_APP_BACKEND_URL=http://127.0.0.1:8000```
 ##### Build and Run the Vue Development Server
 To run the Vue development server:
 
-```npm run dev```
+   ```npm run dev```
 The Vue frontend should now be running at http://localhost:3000.
 
 ### File Structure
 #### Backend (Laravel)
-```backend/├── app/│   ├── Http/│   │   ├── Controllers││──AuthController.php│   │   │  ├──ClothingItemController.php│   │   ├── Middleware/│   │   │   ├── Authenticate.php│   ├── Models/│   │   ├── ClothingItem.php│   │   ├── Category.php│   │   ├── User.php├── database/│  ├── migrations/│   │   ├── 2021_XX_XX_XXXXXX_create_clothing_items_table.php│   │   ├── 2021_XX_XX_XXXXXX_create_categories_table.php│   ├── seeders/│   │   ├── CategorySeeder.php│   │   ├── ClothingItemSeeder.php├── routes/│   ├── api.php│   ├── web.php├── .env├── composer.json```
+```backend/```
+```├── app/```
+```│   ├── Http/```
+```│   │   ├── Controllers/```
+```│   │   │   ├── AuthController.php```
+```│   │   │   ├── ClothingItemController.php```
+```│   │   ├── Middleware/```
+```│   │   │   ├── Authenticate.php```
+```│   ├── Models/```
+```│   │   ├── ClothingItem.php```
+```│   │   ├── Category.php```
+```│   │   ├── User.php```
+```├── database/```
+```│   ├── migrations/```
+```│   │   ├── 2021_XX_XX_XXXXXX_create_clothing_items_table.php```
+```│   │   ├── 2021_XX_XX_XXXXXX_create_categories_table.php```
+```│   ├── seeders/```
+```│   │   ├── CategorySeeder.php```
+```│   │   ├── ClothingItemSeeder.php```
+```├── routes/```
+```│   ├── api.php```
+```│   ├── web.php```
+```├── .env```
+```├── composer.json```
+
 #### Frontend (Vue3)
-```frontend/├── src/│   ├── components/│   │   ├── ClothingItemCard.vue│   │   ├── ClothingItemList.vue│   ├── views/│   │   ├── Home.vue│   │   ├── Login.vue│   │   ├── Register.vue│   ├── store/│   │   ├── index.js├── .env├── package.json└── tailwind.config.js```
+```frontend/```
+```├── src/```
+```│   ├── components/```
+```│   │   ├── ClothingItemCard.vue```
+```│   │   ├── ClothingItemList.vue```
+```│   ├── views/```
+```│   │   ├── Home.vue```
+```│   │   ├── Login.vue```
+```│   │   ├── Register.vue```
+```│   ├── store/```
+```│   │   ├── index.js```
+```├── .env```
+```├── package.json```
+```└── tailwind.config.js``` 
 ### API Endpoints
 - POST /api/register - Register a new user.
 - POST /api/login - Login a user.
