@@ -110,46 +110,11 @@ The Vue frontend should now be running at http://localhost:3000.
 
 ### File Structure
 #### Backend (Laravel)
-```backend/```
-```├── app/```
-```│   ├── Http/```
-```│   │   ├── Controllers/```
-```│   │   │   ├── AuthController.php```
-```│   │   │   ├── ClothingItemController.php```
-```│   │   ├── Middleware/```
-```│   │   │   ├── Authenticate.php```
-```│   ├── Models/```
-```│   │   ├── ClothingItem.php```
-```│   │   ├── Category.php```
-```│   │   ├── User.php```
-```├── database/```
-```│   ├── migrations/```
-```│   │   ├── 2021_XX_XX_XXXXXX_create_clothing_items_table.php```
-```│   │   ├── 2021_XX_XX_XXXXXX_create_categories_table.php```
-```│   ├── seeders/```
-```│   │   ├── CategorySeeder.php```
-```│   │   ├── ClothingItemSeeder.php```
-```├── routes/```
-```│   ├── api.php```
-```│   ├── web.php```
-```├── .env```
-```├── composer.json```
+``` backend/ ├── app/ │ ├── Http/ │ │ ├── Controllers/ │ │ │ ├── AuthController.php │ │ │ ├── ClothingItemController.php │ │ ├── Middleware/ │ │ │ ├── Authenticate.php │ ├── Models/ │ │ ├── ClothingItem.php │ │ ├── Category.php │ │ ├── User.php ├── database/ │ ├── migrations/ │ │ ├── 2021_XX_XX_XXXXXX_create_clothing_items_table.php │ │ ├── 2021_XX_XX_XXXXXX_create_categories_table.php │ ├── seeders/ │ │ ├── CategorySeeder.php │ │ ├── ClothingItemSeeder.php ├── routes/ │ ├── api.php │ ├── web.php ├── .env ├── composer.json```
 
 #### Frontend (Vue3)
-```frontend/```
-```├── src/```
-```│   ├── components/```
-```│   │   ├── ClothingItemCard.vue```
-```│   │   ├── ClothingItemList.vue```
-```│   ├── views/```
-```│   │   ├── Home.vue```
-```│   │   ├── Login.vue```
-```│   │   ├── Register.vue```
-```│   ├── store/```
-```│   │   ├── index.js```
-```├── .env```
-```├── package.json```
-```└── tailwind.config.js``` 
+``` frontend/ ├── src/ │ ├── components/ │ │ ├── ClothingItemCard.vue │ │ ├── ClothingItemList.vue │ ├── views/ │ │ ├── Home.vue │ │ ├── Login.vue │ │ ├── Register.vue │ ├── store/ │ │ ├── index.js ├── .env ├── package.json └── tailwind.config.js ```
+
 ### API Endpoints
 - POST /api/register - Register a new user.
 - POST /api/login - Login a user.
