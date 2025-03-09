@@ -12,8 +12,8 @@ export default {
   },
   data() {
     return {
-      searchQuery: this.filters.search || '',
-      selectedCategory: this.filters.category_id || '',
+      searchQuery: this.filters?.search || '', // Ensure safe access to filters
+      selectedCategory: this.filters?.category_id || '', // Ensure safe access to filters
     };
   },
   methods: {
@@ -27,7 +27,7 @@ export default {
       });
     },
 
-    // created a Category filter functionality
+    // Created a Category filter functionality
     onCategoryChange() {
       // Use Inertia.js for server-side updates
       this.$inertia.get('/clothing-items', {
@@ -48,11 +48,17 @@ export default {
     },
 
     // Delete the clothing item
-    deleteItem(id) {
+    async deleteItem(id) {
       if (confirm('Are you sure you want to delete this item?')) {
-        this.$inertia.delete(`/clothing-items/${id}`).then(() => {
-          this.$inertia.reload(); // Reload after deletion
-        });
+        try {
+          // Use Inertia.js to delete the item and wait for the response
+          await this.$inertia.delete(`/clothing-items/${id}`);
+          // Reload the page after deletion to reflect changes
+          this.$inertia.reload();
+        } catch (error) {
+          // Handle error during deletion
+          console.error("Error deleting item:", error);
+        }
       }
     },
 
@@ -61,10 +67,14 @@ export default {
       // Use Inertia.js for server-side updates with pagination support
       this.$inertia.get('/clothing-items', { page });
     },
+
+    // Navigate to the Create Item page
+    goToAddItemPage() {
+      this.$inertia.visit(`/clothing-items/create`);
+    }
   },
 };
 </script>
-
 <template>
   <div class="container">
     <h1 class="text-2xl font-bold text-center my-6">Clothing Items</h1>
@@ -87,6 +97,16 @@ export default {
           {{ category.name }}
         </option>
       </select>
+    </div>
+
+    <!-- Add Item Button -->
+    <div class="flex justify-end mb-6">
+      <button 
+        @click="goToAddItemPage"
+        class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+      >
+        Add New Item
+      </button>
     </div>
 
     <!-- Clothing Items List -->
@@ -119,17 +139,84 @@ export default {
 </template>
 
 <style scoped>
-/* Styling for the container */
+/* Container Styling */
 .container {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Search and Filter Section */
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.flex .p-2 {
+  padding: 8px 16px;
+}
+
+input[type="text"],
+select {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 16px;
+  width: 45%;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: #1D4ED8;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+/* Add Item Button */
+.bg-blue-500 {
+  background-color: #1D4ED8;
+}
+
+.bg-blue-500:hover {
+  background-color: #3B82F6;
+}
+
+.bg-blue-600 {
+  background-color: #1E40AF;
+}
+
+.bg-blue-600:hover {
+  background-color: #2563EB;
+}
+
+/* Clothing Items List */
 .clothing-items-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .clothing-items-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .clothing-items-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* Clothing Item Styling */
@@ -138,11 +225,15 @@ export default {
   padding: 16px;
   border-radius: 8px;
   border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .clothing-item:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .clothing-item img {
@@ -150,16 +241,35 @@ export default {
   height: 200px;
   width: 100%;
   border-radius: 8px;
+  margin-bottom: 16px;
 }
 
-/* Button Styling */
-.buttons button {
+/* Clothing Item Text */
+.clothing-item h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.clothing-item p {
   font-size: 14px;
+  color: #4B5563;
+  margin-bottom: 4px;
+}
+
+/* Buttons Styling */
+.buttons {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
 }
 
 button {
   padding: 10px 20px;
   border-radius: 5px;
+  font-size: 14px;
   transition: background-color 0.3s ease;
 }
 
@@ -170,13 +280,55 @@ button:hover {
 /* Specific Button Styles */
 .btn-view {
   background-color: #1D4ED8; /* Blue */
+  color: white;
 }
 
 .btn-edit {
   background-color: #1D4ED8; /* Blue */
+  color: white;
 }
 
 .btn-delete {
   background-color: #D32F2F; /* Red */
+  color: white;
 }
+
+.btn-view:hover {
+  background-color: #3B82F6;
+}
+
+.btn-edit:hover {
+  background-color: #3B82F6;
+}
+
+.btn-delete:hover {
+  background-color: #FF7043; /* Orange */
+}
+
+/* Pagination Styling */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #1D4ED8;
+  color: white;
+}
+
+.pagination button.disabled {
+  background-color: #e0e0e0;
+  color: #9e9e9e;
+  cursor: not-allowed;
+}
+
 </style>
