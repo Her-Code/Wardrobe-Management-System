@@ -5,6 +5,8 @@ use App\Models\ClothingItem;
 // use App\Http\Resources\ClothingItemResource;
 use App\Models\Category;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
+
 
 use Illuminate\Http\Request;
 
@@ -42,21 +44,50 @@ class ClothingItemController extends Controller
         return Inertia::render('ClothingItems/Index', [
             'clothingItems' => $clothingItems,
             'categories' => $categories,
-            'filters' => $request->all(), // Pass filters to the view
+            'filters' => $request->all(),
         ]);
     }
     public function create()
     {
-        return Inertia::render('ClothingItems/Create');
+         // Get all categories for the category dropdown
+        $categories = Category::all();
+
+        return Inertia::render('ClothingItems/Create', [
+            'categories' => $categories,
+    ]);
     }
 
     public function store(Request $request)
     {
-        // Validate and create the clothing item
-        ClothingItem::create($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'size' => 'required|string|max:50',
+            'color' => 'required|string|max:50',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
 
-        return redirect()->route('clothing-items.index');
+        // Handle the image file upload
+        $imagePath = $request->file('image')->store('images', 'public');
+    
+        // Create the new clothing item
+        $clothingItem = ClothingItem::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'size' => $request->size,
+            'color' => $request->color,
+            'image' => $imagePath, // Store the image path
+            'user_id' => auth()->id(),
+        ]);
+
+        $imageUrl = Storage::url($imagePath);
+        // Return the newly created clothing item as a response to Inertia
+        return redirect()->route('clothing-items.show', [
+            'clothing_Item' => $clothingItem->id,
+        ])->with('imageUrl', $imageUrl);  // To pass the image URL to the view.
+        
     }
+
 
     public function show(ClothingItem $clothingItem)
     {
