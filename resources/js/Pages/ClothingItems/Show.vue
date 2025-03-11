@@ -7,13 +7,9 @@ export default {
   methods: {
     // Method to dynamically generate the correct image URL
     getImageUrl(image) {
-      // Check if the image path already contains 'images/' part
-      if (image.startsWith('images/')) {
-        return '/' + image; // Just return the image with a leading slash
-      }
-      return '/images/' + image; // Otherwise, prepend 'images/' to the image path
-    },
-
+      if (!image) return '/default-image.jpg'; // Fallback for missing images
+        return `/storage/${image}`; // Ensure correct path
+    }
     goBack() {
       // Navigate back to the Clothing Items index page
       this.$inertia.visit('/clothing-items');
@@ -29,7 +25,8 @@ export default {
     <!-- Item Details -->
     <div class="clothing-item-detail p-6 border rounded-lg shadow-sm">
       <!-- Corrected Image Source Handling -->
-      <img :src="getImageUrl(clothingItem.image)" alt="Clothing Item Image" class="w-full h-64 object-cover mb-4 rounded-lg">
+      <img :src="'/storage/' + clothingItem.image" alt="Clothing Item">
+
       
       <p class="text-lg text-gray-800">Category: {{ clothingItem.category.name }}</p>
       <p class="text-lg text-gray-800">Size: {{ clothingItem.size }}</p>
@@ -44,6 +41,7 @@ export default {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 /* Styling for the container */
