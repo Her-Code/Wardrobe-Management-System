@@ -75,6 +75,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <div class="container">
     <h1 class="text-2xl font-bold text-center my-6">Clothing Items</h1>
@@ -137,6 +138,7 @@ export default {
     <Pagination :meta="clothingItems.meta" @page-changed="goToPage" />
   </div>
 </template>
+
 
 <style scoped>
 /* Container Styling */
