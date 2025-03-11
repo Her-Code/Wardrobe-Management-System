@@ -66,36 +66,50 @@ class ClothingItemController extends Controller
             'color' => 'required|string|max:50',
             'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
-
-        // Handle the image file upload
-        $imagePath = $request->file('image')->store('images', 'public');
     
-        // Create the new clothing item
+        // Check if an image file was uploaded
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+            if (!$imagePath) {
+                return back()->withErrors(['image' => 'Image upload failed.']);
+            }
+        } else {
+            return back()->withErrors(['image' => 'No image file found.']);
+        }
+        
+    
+        // Store the new item in the database
         $clothingItem = ClothingItem::create([
             'name' => $request->name,
             'category_id' => $request->category_id,
             'size' => $request->size,
             'color' => $request->color,
-            'image' => $imagePath, // Store the image path
+            'image' => 'storage/' . $imagePath,
             'user_id' => auth()->id(),
         ]);
-
-        $imageUrl = Storage::url($imagePath);
-        // Return the newly created clothing item as a response to Inertia
-        return redirect()->route('clothing-items.show', [
-            'clothing_Item' => $clothingItem->id,
-        ])->with('imageUrl', $imageUrl);  // To pass the image URL to the view.
         
+        // dd($clothingItem->image);
+        // Return Inertia response with image URL
+        return Inertia::render('clothing-items/Show', [
+            'clothing_Item' => $clothingItem,
+            'imageUrl' => asset($imagePath),
+        ]);
     }
-
-
+    
     public function show(ClothingItem $clothingItem)
     {
         return Inertia::render('ClothingItems/Show', [
-            'clothingItem' => $clothingItem
+            'clothingItem' => [
+                'id' => $clothingItem->id,
+                'name' => $clothingItem->name,
+                'category' => $clothingItem->category,
+                'size' => $clothingItem->size,
+                'color' => $clothingItem->color,
+                'image' => $clothingItem->image ? asset('storage/' . $clothingItem->image) : null,
+            ]
         ]);
     }
-
+    
     public function edit(ClothingItem $clothingItem)
     {
         return Inertia::render('ClothingItems/Edit', [
