@@ -1,44 +1,3 @@
-<template>
-  <div>
-    <form @submit.prevent="submitForm">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" v-model="name" id="name" class="form-control" required />
-      </div>
-
-      <div class="form-group">
-        <label for="category_id">Category</label>
-        <select v-model="category_id" id="category_id" class="form-control" required>
-          <option value="">Select Category</option>
-          <option v-for="category in categories" :key="category.id" :value="category.id">
-            {{ category.name }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="size">Size</label>
-        <input type="text" v-model="size" id="size" class="form-control" required />
-      </div>
-
-      <div class="form-group">
-        <label for="color">Color</label>
-        <input type="text" v-model="color" id="color" class="form-control" required />
-      </div>
-
-      <div class="form-group">
-        <label for="image">Image</label>
-        <input type="file" @change="handleImageChange" id="image" class="form-control" required />
-        <div v-if="imagePreview" class="mt-2">
-          <img :src="imagePreview" alt="Image preview" class="img-thumbnail" style="max-width: 200px;" />
-        </div>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
-</template>
-
 <script>
 export default {
   data() {
@@ -91,9 +50,47 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Add custom styling here */
-</style>
+<template>
+  <div>
+    <form @submit.prevent="submitForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" v-model="name" id="name" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="category_id">Category</label>
+        <select v-model="category_id" id="category_id" class="form-control" required>
+          <option value="">Select Category</option>
+          <option v-for="category in categories" :key="category.id" :value="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="size">Size</label>
+        <input type="text" v-model="size" id="size" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" v-model="color" id="color" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" @change="handleImageChange" id="image" class="form-control" required />
+        <div v-if="imagePreview" class="mt-2">
+          <img :src="imagePreview" alt="Image preview" class="img-thumbnail" style="max-width: 200px;" />
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</template>
+
 
 <style scoped>
 /* Add your custom styling here */
